@@ -1,0 +1,13 @@
+src=$PWD
+
+cd ../data/
+getrevno
+getrad
+cd /Users/gbelanger/Documents/integ/idx/
+./orbut2orbit
+cd -
+cp /Users/gbelanger/Documents/integ/idx/orbit.dat .
+cp /Users/gbelanger/Documents/integ/idx/revno .
+egrep '^[0-9]' /Users/gbelanger/Documents/integ/idx/radiation_belt_passage.txt | sort > rad.dat
+
+cd $src

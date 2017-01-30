@@ -1,0 +1,13 @@
+
+EXTERNAL:
+cern.colt
+hep.aida
+org.apache.log4j
+
+LOCAL:
+gb.esac.aida.functions
+gb.esac.binner
+gb.esac.io
+gb.esac.periodogram
+gb.esac.timeseries
+gb.esac.tools

@@ -1,0 +1,26 @@
+
+cd ../results/current/
+
+env_exit=`ls envelopeExit*.qdp`
+pred_exit=`ls predictionExit*.qdp`
+if [[ -f $env_exit ]] ; then
+   echo "NO NO NO NO" >> $env_exit
+   egrep '^[0-9]' $pred_exit >> $env_exit
+   echo "HARD exit.ps/cps" >> $env_exit
+   sed s/"Altitude (km)"/"Exit Altitude (km)"/g $env_exit > tmp
+   mv tmp $env_exit
+   qdp $env_exit
+fi
+
+env_entry=`ls envelopeEntry*.qdp`
+pred_entry=`ls predictionEntry*.qdp`
+if [[ -f $env_entry ]] ; then
+   echo "NO NO NO NO" >> $env_entry
+   egrep '^[0-9]' $pred_entry >> $env_entry
+   echo "HARD entry.ps/cps" >> $env_entry
+   sed s/"Altitude (km)"/"Entry Altitude (km)"/g $env_entry > tmp
+   mv tmp $env_entry
+   qdp $env_entry
+fi
+
+rm prediction*qdp

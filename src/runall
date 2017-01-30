@@ -1,0 +1,9 @@
+
+mv ../results/current/* ../results/previous/
+
+./getdatafiles
+
+javac *.java
+java GetPerigeeHeights
+
+./makeplots
