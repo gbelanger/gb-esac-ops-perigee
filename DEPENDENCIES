@@ -1,9 +1,3 @@
-
-EXTERNAL:
-cern.colt
-hep.aida
-org.apache.log4j
-
 LOCAL:
 gb.esac.aida.functions
 gb.esac.binner
@@ -11,3 +5,24 @@ gb.esac.io
 gb.esac.periodogram
 gb.esac.timeseries
 gb.esac.tools
+
+EXTERNAL (packages):
+cern.colt
+hep.aida
+org.apache.log4j
+
+
+EXTERNAL (all classes)
+cern.colt.list.DoubleArrayList;
+hep.aida.IAnalysisFactory;
+hep.aida.IAxis;
+hep.aida.IDataPointSet;
+hep.aida.IDataPointSetFactory;
+hep.aida.IFitData;
+hep.aida.IFitFactory;
+hep.aida.IFitResult;
+hep.aida.IFitter;
+hep.aida.IFunction;
+hep.aida.IHistogram1D;
+hep.aida.ITree;
+org.apache.log4j.Logger;
