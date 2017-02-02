@@ -2,7 +2,7 @@
 cd ../results/current/
 
 env_exit=`ls envelopeExit*.qdp`
-pred_exit=`ls predictionExit*.qdp`
+pred_exit=`ls predictedExit*.qdp`
 if [[ -f $env_exit ]] ; then
    echo "NO NO NO NO" >> $env_exit
    egrep '^[0-9]' $pred_exit >> $env_exit
@@ -13,7 +13,7 @@ if [[ -f $env_exit ]] ; then
 fi
 
 env_entry=`ls envelopeEntry*.qdp`
-pred_entry=`ls predictionEntry*.qdp`
+pred_entry=`ls predictedEntry*.qdp`
 if [[ -f $env_entry ]] ; then
    echo "NO NO NO NO" >> $env_entry
    egrep '^[0-9]' $pred_entry >> $env_entry
@@ -22,5 +22,8 @@ if [[ -f $env_entry ]] ; then
    mv tmp $env_entry
    qdp $env_entry
 fi
+rm predicted*qdp
 
-rm prediction*qdp
+res=`ls residuals*qdp`
+echo "HARD residuals.ps/cps" >> $res
+qdp $res

@@ -1,31 +1,19 @@
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 import cern.colt.list.DoubleArrayList;
-import hep.aida.IAnalysisFactory;
-import hep.aida.IFitFactory;
-import hep.aida.IFitResult;
-import hep.aida.IFitter;
 import hep.aida.IFunction;
-import hep.aida.IHistogram1D;
 import org.apache.log4j.Logger;
 
 import gb.esac.aida.functions.SineFunction;
-import gb.esac.binner.Binner;
 import gb.esac.io.AsciiDataFileFormatException;
 import gb.esac.io.AsciiDataFileReader;
 import gb.esac.io.AsciiDataFileWriter;
-import gb.esac.periodogram.FFTPeriodogram;
-import gb.esac.periodogram.ModifiedRayleighPeriodogram;
-import gb.esac.periodogram.PeriodogramMaker;
 import gb.esac.timeseries.TimeSeries;
 import gb.esac.timeseries.TimeSeriesMaker;
 import gb.esac.timeseries.TimeSeriesOperations;
@@ -40,7 +28,11 @@ The altitudes are those measured at perigee entry and exit where the radiation r
 level (of ...) in the radiation monitor.
 
 @author G. Belanger, ESA, ESAC
-@version 2017 January
+@version 2017 Feb
+
+Feb 2:
+- Added safetyFactorInSigmas as an argument to the method calculateModelPredictions
+- Moved prediction calculation to class ModelPredictionCalculator
 
 **/
 
@@ -51,7 +43,7 @@ public class GetPerigeeHeights {
     private static DecimalFormat threeDigits = new DecimalFormat("#.000");
     private static DecimalFormat sci = new DecimalFormat("0.00E00");
     private static int nRevs;
-    private static int nRevsPerYear = 137;
+    static int nRevsPerYear = 137;
     private static int startRev;
     private static int lastRev;
     
@@ -65,8 +57,8 @@ public class GetPerigeeHeights {
     private static IFunction fittedFunctionEntry;
 
     // Directories for reading the input data, and writing the results
-    private static String data = "../data/";
-    private static String results = "../results/current/";
+    static String data = "../data/";
+    static String results = "../results/current/";
 
     public static void main(String[] args) throws Exception {
 	
@@ -92,13 +84,19 @@ public class GetPerigeeHeights {
 	segmentEntry.writeCountsAsQDP(results+"ts_entry_"+startRev+"-"+nRevs+".qdp");
 
 	// Get model
-	double[] modelExit;
-	double[] modelEntry;
 	double[] binCentres = segmentExit.getBinCentres();
-	if ( args.length == 3 ) {
-	    //  Read model from QDP fit result written to .mod file
-	    modelExit = getModelFromFile(binCentres, modelFile);
-	    modelEntry = getModelFromFile(binCentres, modelFile);
+	double[] modelExit = new double[binCentres.length];
+	double[] modelEntry = new double[binCentres.length];
+	boolean thisWorks = false;
+	if ( thisWorks ) {
+	    if ( args.length == 3 ) {
+		//  Read model from QDP fit result written to .mod file
+		modelExit = getModelFromFile(binCentres, modelFile);
+		modelEntry = getModelFromFile(binCentres, modelFile);
+		//  Perform the fit to get:
+		//fittedFunctionExit =
+		//fittedFunctinEntry =
+	    }
 	}
 	else {
 	    //  Get model from fitting the data
@@ -106,26 +104,25 @@ public class GetPerigeeHeights {
 	    double[] initParValues = getInitParValues(segmentExit);
 	    double[][] parBounds = getParBounds(segmentExit);
 	    fittedFunctionExit = SinusoidModelProvider.getModel(binCentres, segmentExit.getBinHeights(), initParValues, parBounds, label);
-	    modelExit = new double[binCentres.length];
-	    for ( int i=0; i < binCentres.length; i++ ) {
-		modelExit[i] = fittedFunctionExit.value(new double[] {binCentres[i]});
-	    }
 	    // ENTRY
 	    label = "ENTRY";	    
 	    initParValues = getInitParValues(segmentEntry);
 	    parBounds = getParBounds(segmentEntry);
 	    fittedFunctionEntry = SinusoidModelProvider.getModel(binCentres, segmentEntry.getBinHeights(), initParValues, parBounds, label);
-	    modelEntry = new double[binCentres.length];
+	    // Get models from fitted functions
 	    for ( int i=0; i < binCentres.length; i++ ) {
+		modelExit[i] = fittedFunctionExit.value(new double[] {binCentres[i]});
 		modelEntry[i] = fittedFunctionEntry.value(new double[] {binCentres[i]});
 	    }
 	}
-	
+
 	//  Calculate the model prediction
-	calculateModelPredictions(segmentExit, modelExit, segmentEntry, modelEntry);
+	double safetyFactorInSigmas = 2;
+	ModelPredictionCalculator.calculateModelPredictions(startRev, nRevs, segmentExit, segmentEntry, fittedFunctionExit, fittedFunctionEntry, modelExit, modelEntry, safetyFactorInSigmas);
     }
     // END main
 
+    
     private static double[] getInitParValues(TimeSeries ts) {
 	// parameters: period, phase, amplitude, yOffset
 	double[] binHeights = ts.getBinHeights();
@@ -144,124 +141,6 @@ public class GetPerigeeHeights {
 	return new double[][]{periodBounds, phaseBounds, amplBounds, yOffsetBounds};
     }
     
-    private static void calculateModelPredictions(TimeSeries segmentExit, double[] modelExit, TimeSeries segmentEntry, double[] modelEntry) throws Exception {
-	//  Compute envelopes
-	double sigmaExit = getSigmaFromResiduals(segmentExit.getBinHeights(), modelExit);
-	double sigmaEntry = getSigmaFromResiduals(segmentEntry.getBinHeights(), modelEntry);
-	int nFittedRevs = modelExit.length;
-	double[] revNum = new double[nFittedRevs];
-	double[] safeExit = new double[nFittedRevs];
-	double avgExit = BasicStats.getMean(modelExit);
-	double sigmaExitFraction = sigmaExit/avgExit;
-	double[] safeEntry = new double[nFittedRevs];
-	double avgEntry = BasicStats.getMean(modelEntry);
-	double sigmaEntryFraction = sigmaEntry/avgEntry;
-	for ( int i=0; i < nFittedRevs; i++ ) {
-	    revNum[i] = (double)startRev + i;
-	    safeExit[i] = modelExit[i] + modelExit[i]*1.5*sigmaExitFraction;
-	    safeEntry[i] = modelEntry[i] + modelEntry[i]*1.5*sigmaEntryFraction;
-	}
-	double lastRev = revNum[nFittedRevs-1];
-	String[] header = new String[] {
-	    "DEV /XS",
-	    "LAB F",
-	    "TIME OFF",
-	    "LINE STEP",
-	    "VIEW 0.1 0.2 0.9 0.8",
-	    "CS 1.3",
-	    "LW 4",
-	    "LAB X Revolution Number",
-	    "LAB Y Altitude (km)",
-	    "R Y 2.5e4 8.2e4"
-	};
-	AsciiDataFileWriter out = new AsciiDataFileWriter(results+"envelopeExit_"+startRev+"-"+nRevs+".qdp");
-	out.writeData(header, revNum, segmentExit.getBinHeights(), modelExit, safeExit);
-	out = new AsciiDataFileWriter(results+"envelopeEntry_"+startRev+"-"+nRevs+".qdp");
-	out.writeData(header, revNum, segmentEntry.getBinHeights(), modelEntry, safeEntry);
-
-	//  Compute predictions
-	int nChangesPerYear = 137;
-	int timeInRevsBetweenChanges = nRevsPerYear/nChangesPerYear;
-	int nRevsToPredict = (int)1.5*nRevsPerYear;
-	int nPredictionPoints = nRevsToPredict/timeInRevsBetweenChanges;
-	double[] predictionExit = new double[nPredictionPoints];
-	double[] predictionEntry = new double[nPredictionPoints];
-	double[] safePredictionExit = new double[nPredictionPoints];
-	double[] safePredictionEntry = new double[nPredictionPoints];
-	double[] binCentres = segmentExit.getBinCentres();
-	double lastRevTime = binCentres[binCentres.length-1];
-	double dt = BasicStats.getMean(segmentExit.getBinWidths());
-	double timeBetweenChanges = dt*timeInRevsBetweenChanges;
-	double[] halfWidths = new double[nPredictionPoints];
-	double[] times = new double[nPredictionPoints];
-	double[] revTimes = new double[nPredictionPoints];
-	double[] nan = new double[nPredictionPoints];
-	int i=0;
-	
-	//  Print out model/safe predictions to file
-	int bufferSize = 256000;
-	String filename = results+"predicted_heights.txt";
-  	PrintWriter printWriter = new PrintWriter(new BufferedWriter(new FileWriter(filename), bufferSize));
-	printWriter.println("REV_RANGE ENTRY/SAFE EXIT/SAFE");
-	while ( i < predictionExit.length ) {
-	    times[i] = lastRevTime + i*timeBetweenChanges;
-	    //halfWidths[i] = dt/2;
-	    revTimes[i] = lastRev + i*timeInRevsBetweenChanges;
-	    nan[i] = Double.NaN;
-	    predictionExit[i] = fittedFunctionExit.value(new double[] {times[i]});
-	    safePredictionExit[i] = predictionExit[i] + predictionExit[i]*1.5*sigmaExitFraction;
-	    predictionEntry[i] = fittedFunctionEntry.value(new double[] {times[i]});
-	    safePredictionEntry[i] = predictionEntry[i] + predictionEntry[i]*1.5*sigmaEntryFraction;
-	    double start = revTimes[i] - timeInRevsBetweenChanges/2;
-	    double end = revTimes[i] + timeInRevsBetweenChanges/2;
-	    printWriter.println((int)start+"-"+(int)end+" "+(int)predictionEntry[i]+"/"+(int)safePredictionEntry[i]
-				+" "+(int)predictionExit[i]+"/"+(int)safePredictionExit[i]);
-	    i++;
-	}
-	printWriter.close();
-
-	// EXIT MODEL
-	int minY = (int)Math.floor(BasicStats.getMedian(modelExit) - 4*sigmaExit);
-	int maxY = (int)Math.ceil(BasicStats.getMedian(modelExit) + 4*sigmaExit);
-	int minX = startRev - 10;
-	int maxX = (int)lastRev + nRevsToPredict;
-	header = new String[] {
-	    "DEV /XS",
-	    "LAB F",
-	    "TIME OFF",
-	    "LINE STEP",
-	    "VIEW 0.1 0.2 0.9 0.8",
-	    "CS 1.3",
-	    "LW 4",
-	    "LAB X Revolution Number",
-	    "LAB Y Altitude (km)",
-	    "R Y "+minY+" "+maxY,
-	    "R X "+minX+" "+maxX
-	};
-	out = new AsciiDataFileWriter(results+"predictionExit_"+minX+"-"+maxX+".qdp");
-	out.writeData(header, revTimes, nan, predictionExit, safePredictionExit);
-
-	// ENTRY MODEL
-	minY = (int)Math.floor(BasicStats.getMedian(modelEntry) - 4*sigmaEntry);
-	maxY = (int)Math.ceil(BasicStats.getMedian(modelEntry) + 4*sigmaEntry);
-	minX = startRev - 10;
-	maxX = (int)lastRev + nRevsToPredict;
-	header = new String[] {
-	    "DEV /XS",
-	    "LAB F",
-	    "TIME OFF",
-	    "LINE STEP",
-	    "VIEW 0.1 0.2 0.9 0.8",
-	    "CS 1.3",
-	    "LW 4",
-	    "LAB X Revolution Number",
-	    "LAB Y Altitude (km)",
-	    "R Y "+minY+" "+maxY,
-	    "R X "+minX+" "+maxX
-	};
-	out = new AsciiDataFileWriter(results+"predictionEntry_"+minX+"-"+maxX+".qdp");
-	out.writeData(header, revTimes, nan, predictionEntry, safePredictionEntry);
-    }
     
     private static TimeSeries[] makeTimeSeries() throws Exception {
 	long tZero = timeInSecAtStartOfRev[0];
@@ -319,6 +198,7 @@ public class GetPerigeeHeights {
 
 	return new TimeSeries[]{tsExit_allBins, tsEntry_allBins};
     }
+    
 
     private static void readOrbitFileAndMakePlots() throws Exception {
  	AsciiDataFileReader orbut = new AsciiDataFileReader(data+"orbit.dat");
@@ -384,6 +264,7 @@ public class GetPerigeeHeights {
 	out.writeData(header, argPer, exitAltitude);
     }
 
+    
     //  This hasn't been used in a long time and will probably not work
     private static double[] getModelFromFile(double[] binCentres, File modelFile) throws AsciiDataFileFormatException, IOException  {
 	//  Combined model cons sin sin sin
@@ -415,26 +296,6 @@ public class GetPerigeeHeights {
 	return model;
     }
 
-    private static double getSigmaFromResiduals(double[] data, double[] model) throws Exception {
-	int nFittedRevs = model.length;
-	double[] residuals = new double[nFittedRevs];
-	double[] fractionalResiduals = new double[nFittedRevs];
-	for ( int i=0;  i < nFittedRevs; i++ ) {
-	    residuals[i] = data[i] - model[i];
-	    fractionalResiduals[i] = 100.*(data[i] - model[i])/data[i];
-	}
-	int nBins = residuals.length/5;
-	IHistogram1D histoOfRes = Binner.makeHisto(residuals, nBins);
-	IHistogram1D histoOfFracRes = Binner.makeHisto(fractionalResiduals, nBins);
-	AsciiDataFileWriter out = new AsciiDataFileWriter(results+"residuals_"+startRev+"-"+nRevs+".qdp");
-	out.writeHisto(histoOfFracRes, "Fractional Residuals (%)", true);
-	//  Fit and get sigma
- 	IAnalysisFactory af = IAnalysisFactory.create();
-  	IFitFactory fitF   = af.createFitFactory();
- 	IFitter fitter = fitF.createFitter("Chi2", "jminuit");
-	IFitResult gaussFitResult = fitter.fit(histoOfRes, "g");
-	return gaussFitResult.fittedParameter("sigma");
-    }
 
     private static void readRadAndRevnoFiles() throws Exception {
 	// read radiation data file downloaded from IDSC webpage

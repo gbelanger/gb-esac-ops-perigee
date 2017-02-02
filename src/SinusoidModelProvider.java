@@ -17,7 +17,7 @@ import org.apache.log4j.Logger;
 This class is used to fit sinusoidally shapped functions to data.
 
 @author G. Belanger, ESA, ESAC
-@version 2017 Januray
+@version 2017 Feb
 
  **/
 
@@ -25,11 +25,6 @@ public class SinusoidModelProvider {
 
     private static Logger logger  = Logger.getLogger(SinusoidModelProvider.class);
 
-    /**
-       @description
-       @arguments 
-       @returns 
-     **/
     public static IFunction getModel(double[] x, double[] y, double[] initialParValues, double[][] bounds, String label) {
 	
 	logger.info("- "+label+" -");
