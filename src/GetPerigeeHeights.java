@@ -24,8 +24,7 @@ import gb.esac.tools.BasicStats;
 This programme calculates predictions for the evolution of the safe perigee entry and exit altitudes
 using a simple sinusoidal model based on the satellite's past altitude measurements (2 years).
 
-The altitudes are those measured at perigee entry and exit where the radiation reaches a certain
-level (of ...) in the radiation monitor.
+The altitudes are those measured at perigee entry and exit where the IREM TC3 (soft electrons) rate reads 600 counts.
 
 @author G. Belanger, ESA, ESAC
 @version 2017 Feb

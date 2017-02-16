@@ -64,7 +64,7 @@ public class ModelPredictionCalculator {
 	out.writeData(header, revNum, segmentEntry.getBinHeights(), modelEntry, safeEntry);
 
 	//  Compute predictions
-	int nChangesPerYear = 137;
+	int nChangesPerYear = 12;
 	int nRevsPerYear = GetPerigeeHeights.nRevsPerYear;
 	int timeInRevsBetweenChanges = nRevsPerYear/nChangesPerYear;
 	int nRevsToPredict = (int)1.5*nRevsPerYear;
