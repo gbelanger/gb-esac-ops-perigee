@@ -1,12 +1,12 @@
 ! Filename: ../results/current/ts_exit_withNaNs_noGaps_all.qdp
 ! Time series class: gb.esac.timeseries.TimeSeries
 ! Produced by: gb.esac.timeseries.QDPTimeSeriesFileWriter
-! Date: Thu Feb 02 15:20:07 CET 2017
+! Date: Sat Feb 11 11:50:01 CET 2017
 ! Author: G. Belanger - ESA/ESAC
 ! TStart: 238239.0
-! Duration: 4.504899E8 s
-! Mean Rate: 0.172 +/- 0.004 cps
-! Detection Significance: 38.468
+! Duration: 4.51179054E8 s
+! Mean Rate: 0.173 +/- 0.004 cps
+! Detection Significance: 38.500
 ! Columns: binCentres, halfBinWidths, counts
 !
 DEV /XS
@@ -21,7 +21,7 @@ CS 1.1
 LAB X Time (seconds since 238239.0)
 LAB Y Intensity (cts per bin)
 VIEW 0.1 0.2 0.9 0.8
-R X -22524495.00 473014395.00
+R X -22558952.70 473738006.70
 !
 119135.0	119135.0	35899.0
 358455.0	120185.0	29382.0
@@ -1795,5 +1795,8 @@ R X -22524495.00 473014395.00
 4.494561375E8	114874.5	44228.0
 4.496858745E8	114862.5	71187.0
 4.499155985E8	114861.5	57748.0
-4.50145323E8	114863.0	43339.0
-4.50375043E8	114857.0	58649.0
+4.501453225E8	114862.5	43339.0
+4.50375042E8	114857.0	58649.0
+4.506047465E8	114847.5	56089.0
+4.50834447E8	114853.0	53021.0
+4.51064177E8	114877.0	62806.0
