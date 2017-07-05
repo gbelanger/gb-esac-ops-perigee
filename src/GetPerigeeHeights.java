@@ -27,7 +27,11 @@ using a simple sinusoidal model based on the satellite's past altitude measureme
 The altitudes are those measured at perigee entry and exit where the IREM TC3 (soft electrons) rate reads 600 counts.
 
 @author G. Belanger, ESA, ESAC
-@version 2017 Feb
+@version 2017 July
+
+July 3:
+- Changed phase offset to year/4 in method getInitParValues, 
+  because the fit on the exit data was failing using year/2.
 
 Feb 2:
 - Added safetyFactorInSigmas as an argument to the method calculateModelPredictions
@@ -128,7 +132,7 @@ public class GetPerigeeHeights {
 	double meanHeight = ts.meanBinHeight();
 	double meanDev = Math.sqrt(ts.varianceInBinHeights());
 	double amplitude = meanDev; 
-	return new double[] {year, year/2, amplitude, meanHeight}; 
+	return new double[] {year, year/4., amplitude, meanHeight}; 
     }
     
     private static double[][] getParBounds(TimeSeries ts) {

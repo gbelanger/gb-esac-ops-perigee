@@ -1,3 +1,4 @@
+#! /bin/bash
 
 cd ../results/current/
 
@@ -10,6 +11,7 @@ if [[ -f $env_exit ]] ; then
    sed s/"Altitude (km)"/"Exit Altitude (km)"/g $env_exit > tmp
    mv tmp $env_exit
    qdp $env_exit
+   
 fi
 
 env_entry=`ls envelopeEntry*.qdp`
@@ -27,3 +29,7 @@ rm predicted*qdp
 res=`ls residuals*qdp`
 echo "HARD residuals.ps/cps" >> $res
 qdp $res
+
+convert -density 200 exit.ps -flatten exit.png
+convert -density 200 entry.ps -flatten entry.png
+convert -density 200 residuals.ps -flatten residuals.png
