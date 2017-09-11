@@ -304,7 +304,7 @@ public class GetPerigeeHeights {
 	// read radiation data file downloaded from IDSC webpage
 	AsciiDataFileReader in = new AsciiDataFileReader(data+"rad.dat");
 	revNum = in.getDblCol(0);
-	nRevs = revNum.length;
+	nRevs = revNum.length-1;
 	lastRev = (int)revNum[nRevs-1];
 	int nRevsToModel = 2*nRevsPerYear;
 	startRev  = lastRev - nRevsToModel;

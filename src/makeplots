@@ -11,7 +11,6 @@ if [[ -f $env_exit ]] ; then
    sed s/"Altitude (km)"/"Exit Altitude (km)"/g $env_exit > tmp
    mv tmp $env_exit
    qdp $env_exit
-   
 fi
 
 env_entry=`ls envelopeEntry*.qdp`
@@ -30,6 +29,10 @@ res=`ls residuals*qdp`
 echo "HARD residuals.ps/cps" >> $res
 qdp $res
 
+#  Make PDF plots
+for file in *.ps ; do epstopdf $file ; done
+
+#  Make PNG plots
 convert -density 200 exit.ps -flatten exit.png
 convert -density 200 entry.ps -flatten entry.png
 convert -density 200 residuals.ps -flatten residuals.png

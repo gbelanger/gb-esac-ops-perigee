@@ -1,9 +1,29 @@
+#!/bin/bash
 
-mv ../results/current/* ../results/previous/
+##  Clean up previous results
+cd ../results/current/
+file=`ls residuals_*qdp`
+range=`echo $file | cut -d"_" -f2 | cut -d"." -f1`
+if [ ! -d $range ]
+then
+  mkdir $range
+fi
+mv *.* $range/
+if [ ! -d ../previous/$range ]
+then 
+  mv -f $range ../previous/
+else
+  cp $range/* ../previous/$range/
+  rm -r $range
+fi
+cd -
 
+##  Get data files needed
 ./getdatafiles
 
+##  Calculate the predictions
 javac *.java
 java GetPerigeeHeights
 
+##  Make the PS, PDF, and PNG plots
 ./makeplots
