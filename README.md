@@ -1,34 +1,6 @@
 Update prediction for altitude at perigee
 ==========================================
 
-Warning: Required third-party Java classes
---------
-
-```
-cern.colt.list.DoubleArrayList;
-gb.esac.aida.functions.SineFunction;
-gb.esac.binner.Binner;
-gb.esac.io.AsciiDataFileFormatException;
-gb.esac.io.AsciiDataFileReader;
-gb.esac.io.AsciiDataFileWriter;
-gb.esac.timeseries.TimeSeries;
-gb.esac.timeseries.TimeSeriesMaker;
-gb.esac.timeseries.TimeSeriesOperations;
-gb.esac.tools.BasicStats;
-gb.esac.tools.MinMax;
-hep.aida.IAnalysisFactory;
-hep.aida.IAxis;
-hep.aida.IDataPointSet;
-hep.aida.IDataPointSetFactory;
-hep.aida.IFitData;
-hep.aida.IFitFactory;
-hep.aida.IFitResult;
-hep.aida.IFitter;
-hep.aida.IFunction;
-hep.aida.IHistogram1D;
-hep.aida.ITree;
-org.apache.log4j.Logger;
-```
 
 Default:
 --------
@@ -75,4 +47,33 @@ java GetPerigeeHeights
 
 ```
 ./makeplots
+```
+
+Warning: Required third-party Java classes
+--------
+
+```
+cern.colt.list.DoubleArrayList;
+gb.esac.aida.functions.SineFunction;
+gb.esac.binner.Binner;
+gb.esac.io.AsciiDataFileFormatException;
+gb.esac.io.AsciiDataFileReader;
+gb.esac.io.AsciiDataFileWriter;
+gb.esac.timeseries.TimeSeries;
+gb.esac.timeseries.TimeSeriesMaker;
+gb.esac.timeseries.TimeSeriesOperations;
+gb.esac.tools.BasicStats;
+gb.esac.tools.MinMax;
+hep.aida.IAnalysisFactory;
+hep.aida.IAxis;
+hep.aida.IDataPointSet;
+hep.aida.IDataPointSetFactory;
+hep.aida.IFitData;
+hep.aida.IFitFactory;
+hep.aida.IFitResult;
+hep.aida.IFitter;
+hep.aida.IFunction;
+hep.aida.IHistogram1D;
+hep.aida.ITree;
+org.apache.log4j.Logger;
 ```
