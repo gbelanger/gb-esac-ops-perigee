@@ -1,5 +1,5 @@
-How to get an updated prediction for the altitude at perigee entry and exit
-===========================================================================
+Get updated prediction for the altitude at perigee entry and exit
+=================================================================
 
 DEFAULT:
 --------
@@ -14,9 +14,9 @@ cd src/
 STEP by STEP:
 -------------
 
-1. (OPTIONAL) Download orbut_ap.txt (contains the orbital parameters of Integral)
+1. (Optional step) Download orbut_ap.txt (contains the orbital parameters of Integral)
 
-  * [The data comes from the file called orbut_ap.txt sent around by MOC with the bubble plots.
+  * The data comes from the file called orbut_ap.txt sent around by MOC with the bubble plots.
   * Note: Download by hand from the most recent email with subject "New INTEGRAL Mission Planning Constraint Plots: ..."
 
 2. Execute getdatafiles : downloads and copies other required files
