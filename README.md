@@ -1,4 +1,4 @@
-Updated prediction for altitude at perigee
+Update prediction for altitude at perigee
 ==========================================
 
 DEFAULT:
@@ -17,7 +17,7 @@ STEP by STEP:
 1. (Optional step) Download orbut_ap.txt (contains the orbital parameters of Integral)
 
   * The data comes from the file called orbut_ap.txt sent around by MOC with the bubble plots.
-  * Note: Download by hand from the most recent email with subject "New INTEGRAL Mission Planning Constraint Plots: ..."
+  * Download by hand from the most recent email with subject "New INTEGRAL Mission Planning Constraint Plots: ..."
 
 2. Execute getdatafiles : downloads and copies other required files
 
@@ -42,12 +42,7 @@ javac *.java
 java GetPerigeeHeights
 ```
 
-* [Optional arguments: Can run with 1 (startRev) or 2 (startRev yes|no) or 3 (startRev yes|no model)
-  - startRev : default is (lastRev-274), which is 2 years
-  - yes or no : default is 'no' - specify that the orbit.dat file should be read and plots made from it
-  - QDP model file (default is "modelUpTo1145-minusFirstFourYears.mod")
-
-5. Combined the output files
+5. Make the plots
 
 ```
 ./makeplots
