@@ -1,5 +1,5 @@
-Get updated prediction for the altitude at perigee entry and exit
-=================================================================
+Updated prediction for altitude at perigee
+==========================================
 
 DEFAULT:
 --------
