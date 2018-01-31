@@ -1,10 +1,10 @@
 Update prediction for altitude at perigee
 ==========================================
 
-Warning:
+Warning: Required non-native Java classes
 --------
+
 ```
-require
 cern.colt.list.DoubleArrayList;
 gb.esac.aida.functions.SineFunction;
 gb.esac.binner.Binner;
@@ -27,15 +27,6 @@ hep.aida.IFitter;
 hep.aida.IFunction;
 hep.aida.IHistogram1D;
 hep.aida.ITree;
-java.io.BufferedWriter;
-java.io.File;
-java.io.FileWriter;
-java.io.IOException;
-java.io.PrintWriter;
-java.text.DecimalFormat;
-java.text.SimpleDateFormat;
-java.util.Calendar;
-java.util.Date;
 org.apache.log4j.Logger;
 ```
 
