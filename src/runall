@@ -3,18 +3,15 @@
 ##  Clean up previous results
 cd ../results/current/
 file=`ls residuals_*qdp`
-range=`echo $file | cut -d"_" -f2 | cut -d"." -f1`
-if [ ! -d $range ]
-then
-  mkdir $range
-fi
-mv *.* $range/
-if [ ! -d ../previous/$range ]
-then 
-  mv -f $range ../previous/
-else
-  cp $range/* ../previous/$range/
-  rm -r $range
+if [[ $file != "" ]] ; then
+    range=`echo $file | cut -d"_" -f2 | cut -d"." -f1`
+    mkdir -p ../previous/$range
+    content=`ls`
+    if [[ $content != "" ]] ; then
+	for file in $content ; do
+	    mv $file ../previous/$range/
+	done
+    fi
 fi
 cd -
 

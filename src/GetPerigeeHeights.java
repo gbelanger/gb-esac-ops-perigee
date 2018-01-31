@@ -66,6 +66,7 @@ public class GetPerigeeHeights {
     public static void main(String[] args) throws Exception {
 	
 	// This method also defines lastRev and startRev=(lastRev - nRevs) with nRevs=2*nRevsPerYear;
+	logger.info("Reading rad and revno files");
 	readRadAndRevnoFiles();
 	
 	//  Handle arguments (if any are supplied)
@@ -79,6 +80,7 @@ public class GetPerigeeHeights {
 	TimeSeries tsEntry = tsExitAndEntry[1];
 
 	// Get the segments from startRev to lastRev
+	logger.info("Extracting the segments from stratRev to lastRev");
 	int startIndex = startRev-1;
 	int lastIndex = nRevs-2;
 	TimeSeries segmentExit = TimeSeriesOperations.getSegment(tsExit, startIndex, lastIndex);
@@ -87,6 +89,7 @@ public class GetPerigeeHeights {
 	segmentEntry.writeCountsAsQDP(results+"ts_entry_"+startRev+"-"+nRevs+".qdp");
 
 	// Get model
+	logger.info("Contructing sinusoidal models");
 	double[] binCentres = segmentExit.getBinCentres();
 	double[] modelExit = new double[binCentres.length];
 	double[] modelEntry = new double[binCentres.length];
@@ -137,15 +140,17 @@ public class GetPerigeeHeights {
     
     private static double[][] getParBounds(TimeSeries ts) {
 	double quarter = year/4;
-	double[] periodBounds = new double[] {year-quarter, year+quarter};
+	double third = year/3;
+	double[] periodBounds = new double[] {year-third, year+third};
 	double[] phaseBounds = new double[] {0, year};
-	double[] amplBounds = new double[] {0, 5*Math.sqrt(ts.varianceInBinHeights())};
+	double[] amplBounds = new double[] {3, 10*Math.sqrt(ts.varianceInBinHeights())};
 	double[] yOffsetBounds = new double[] {ts.minBinHeight(), ts.maxBinHeight()};
 	return new double[][]{periodBounds, phaseBounds, amplBounds, yOffsetBounds};
     }
     
     
     private static TimeSeries[] makeTimeSeries() throws Exception {
+	logger.info("Making time series of exit and entry heights");
 	long tZero = timeInSecAtStartOfRev[0];
 	double[] durations = new double[nRevs];
 	double[] binEdges = new double[2*nRevs];
@@ -171,13 +176,11 @@ public class GetPerigeeHeights {
 	    binHeightsEntryList_allBins.add(binHeightsEntry[i]);
 	    // Exclude bins for which the intensity is NaN
 	    // This introduces gaps in sampling but eliminates NaNs from the rates
-	    if ( !Double.isNaN(binHeightsExit[i]) ) {
+	    if ( !Double.isNaN(binHeightsExit[i]) && !Double.isNaN(binHeightsEntry[i]) ) {
 		binHeightsExitList_minBins.add(binHeightsExit[i]);
+		binHeightsEntryList_minBins.add(binHeightsEntry[i]);
 		binEdgesList_minBins.add(binEdges[2*i]);
 		binEdgesList_minBins.add(binEdges[2*i+1]);
-	    }
-	    if ( !Double.isNaN(binHeightsEntry[i]) ) {
-		binHeightsEntryList_minBins.add(binHeightsEntry[i]);
 	    }
 	}
 	binHeightsExitList_allBins.trimToSize();
@@ -194,6 +197,7 @@ public class GetPerigeeHeights {
 	tsExit_allBins.writeCountsAsQDP(results+"ts_exit_withNaNs_noGaps_all.qdp");
 
 	////  Write Entry TS
+	
 	TimeSeries tsEntry_minBins = TimeSeriesMaker.makeTimeSeries(binEdgesList_minBins.elements(), binHeightsEntryList_minBins.elements());
 	tsEntry_minBins.writeCountsAsQDP(results+"ts_entry_noNaNs_gaps_all.qdp");
 	TimeSeries tsEntry_allBins = TimeSeriesMaker.makeTimeSeries(binEdgesList_allBins.elements(), binHeightsEntryList_allBins.elements());

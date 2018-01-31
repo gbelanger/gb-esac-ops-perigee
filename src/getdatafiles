@@ -1,13 +1,16 @@
-src=$PWD
+#!/bin/bash
+
+SRC_DIR=$PWD
+IDX_DIR=/Users/gbelanger/Documents/active/I/integral/idx/
 
 cd ../data/
 getrevno
 getrad
-cd /Users/gbelanger/Documents/library/I/integ/idx/
+cd $IDX_DIR
 ./orbut2orbit
 cd -
-cp /Users/gbelanger/Documents/library/I/integ/idx/orbit.dat .
-cp /Users/gbelanger/Documents/library/I/integ/idx/revno .
-egrep '^[0-9]' /Users/gbelanger/Documents/library/I/integ/idx/radiation_belt_passage.txt | sort > rad.dat
+cp $IDX_DIR/orbit.dat .
+cp $IDX_DIR/revno .
+egrep '^[0-9]' $IDX_DIR/radiation_belt_passage.txt | sort > rad.dat
 
-cd $src
+cd $SRC_DIR

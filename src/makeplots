@@ -1,12 +1,21 @@
 #! /bin/bash
 
-cd ../results/current/
+#  Get current altitudes
+cd ../data/
+exit_alt=`cat exit_altitude.dat`
+entry_alt=`cat entry_altitude.dat`
 
+
+cd ../results/current/
 env_exit=`ls envelopeExit*.qdp`
 pred_exit=`ls predictedExit*.qdp`
 if [[ -f $env_exit ]] ; then
    echo "NO NO NO NO" >> $env_exit
    egrep '^[0-9]' $pred_exit >> $env_exit
+   xmin=`egrep '^[0-9]' $env_exit | head -1 | awk '{print $1}'`
+   xmax=`egrep '^[0-9]' $env_exit | tail -1 | awk '{print $1}'`
+   echo "LAB 1 POS $xmin $exit_alt LINE 0 0.95 LS 2 \"" >> $env_exit
+   echo "LAB 2 POS $xmax $exit_alt \"$exit_alt km\" JUST RIGHT" >> $env_exit
    echo "HARD exit.ps/cps" >> $env_exit
    sed s/"Altitude (km)"/"Exit Altitude (km)"/g $env_exit > tmp
    mv tmp $env_exit
@@ -18,6 +27,10 @@ pred_entry=`ls predictedEntry*.qdp`
 if [[ -f $env_entry ]] ; then
    echo "NO NO NO NO" >> $env_entry
    egrep '^[0-9]' $pred_entry >> $env_entry
+   xmin=`egrep '^[0-9]' $env_entry | head -1 | awk '{print $1}'`
+   xmax=`egrep '^[0-9]' $env_entry | tail -1 | awk '{print $1}'`
+   echo "LAB 1 POS $xmin $entry_alt LINE 0 0.95 LS 2 \"" >> $env_entry
+   echo "LAB 2 POS $xmax $entry_alt \"$entry_alt km\" JUST RIGHT" >> $env_entry
    echo "HARD entry.ps/cps" >> $env_entry
    sed s/"Altitude (km)"/"Entry Altitude (km)"/g $env_entry > tmp
    mv tmp $env_entry
