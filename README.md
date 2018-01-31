@@ -1,7 +1,7 @@
 Update prediction for altitude at perigee
 ==========================================
 
-Warning: Required non-native Java classes
+Warning: Required third-party Java classes
 --------
 
 ```
