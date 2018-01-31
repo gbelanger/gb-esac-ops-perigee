@@ -1,7 +1,45 @@
 Update prediction for altitude at perigee
 ==========================================
 
-DEFAULT:
+Warning:
+--------
+```
+require
+cern.colt.list.DoubleArrayList;
+gb.esac.aida.functions.SineFunction;
+gb.esac.binner.Binner;
+gb.esac.io.AsciiDataFileFormatException;
+gb.esac.io.AsciiDataFileReader;
+gb.esac.io.AsciiDataFileWriter;
+gb.esac.timeseries.TimeSeries;
+gb.esac.timeseries.TimeSeriesMaker;
+gb.esac.timeseries.TimeSeriesOperations;
+gb.esac.tools.BasicStats;
+gb.esac.tools.MinMax;
+hep.aida.IAnalysisFactory;
+hep.aida.IAxis;
+hep.aida.IDataPointSet;
+hep.aida.IDataPointSetFactory;
+hep.aida.IFitData;
+hep.aida.IFitFactory;
+hep.aida.IFitResult;
+hep.aida.IFitter;
+hep.aida.IFunction;
+hep.aida.IHistogram1D;
+hep.aida.ITree;
+java.io.BufferedWriter;
+java.io.File;
+java.io.FileWriter;
+java.io.IOException;
+java.io.PrintWriter;
+java.text.DecimalFormat;
+java.text.SimpleDateFormat;
+java.util.Calendar;
+java.util.Date;
+org.apache.log4j.Logger;
+```
+
+Default:
 --------
 ```
 cd src/
@@ -11,7 +49,7 @@ cd src/
 (Uses orbut_ap.dat that on disk, but this file is not used in the modelling or prediction)
 
 
-STEP by STEP:
+Step by Step:
 -------------
 
 1. (Optional step) Download orbut_ap.txt (contains the orbital parameters of Integral)
