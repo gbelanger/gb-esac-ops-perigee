@@ -6,7 +6,7 @@
 * gb.esac.timeseries
 * gb.esac.tools
 
-# Local (All classes)
+# (All classes)
 * gb.esac.aida.functions.SineFunction;
 * gb.esac.binner.Binner;
 * gb.esac.io.AsciiDataFileFormatException;
@@ -23,7 +23,7 @@
 * hep.aida
 * org.apache.log4j
 
-# External (All classes)
+# (All classes)
 * cern.colt.list.DoubleArrayList;
 * hep.aida.IAnalysisFactory;
 * hep.aida.IAxis;
