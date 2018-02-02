@@ -1,4 +1,6 @@
-# Local (Packages)
+# Local
+
+## Packages
     gb.esac.aida.functions
     gb.esac.binner
     gb.esac.io
@@ -6,7 +8,7 @@
     gb.esac.timeseries
     gb.esac.tools
 
-## (All classes)
+## All classes
     gb.esac.aida.functions.SineFunction;
     gb.esac.binner.Binner;
     gb.esac.io.AsciiDataFileFormatException;
@@ -18,12 +20,14 @@
     gb.esac.tools.BasicStats;
     gb.esac.tools.MinMax;
 
-# External (Packages)
+# External
+
+## Packages
     cern.colt;
     hep.aida;
     org.apache.log4j;
 
-## (All classes)
+## All classes
     cern.colt.list.DoubleArrayList;
     hep.aida.IAnalysisFactory;
     hep.aida.IAxis;
