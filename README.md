@@ -51,4 +51,4 @@ java GetPerigeeHeights
 
 Warning:
 -------
-For list of required packages and classes see DEPENDENCIES.
+For list of required packages and classes see [DEPENDENCIES](https://github.com/gbelanger/gb-esac-ops-perigee/blob/master/DEPENDENCIES).
