@@ -1,10 +1,10 @@
 # Local (Packages)
-* gb.esac.aida.functions
-* gb.esac.binner
-* gb.esac.io
-* gb.esac.periodogram
-* gb.esac.timeseries
-* gb.esac.tools
+  gb.esac.aida.functions
+  gb.esac.binner
+  gb.esac.io
+  gb.esac.periodogram
+  gb.esac.timeseries
+  gb.esac.tools
 
 # (All classes)
 * gb.esac.aida.functions.SineFunction;
