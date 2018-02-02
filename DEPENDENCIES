@@ -1,4 +1,6 @@
-LOCAL:
+LOCAL
+
+(Packages):
 gb.esac.aida.functions
 gb.esac.binner
 gb.esac.io
@@ -6,13 +8,26 @@ gb.esac.periodogram
 gb.esac.timeseries
 gb.esac.tools
 
-EXTERNAL (packages):
+(All classes):
+gb.esac.aida.functions.SineFunction;
+gb.esac.binner.Binner;
+gb.esac.io.AsciiDataFileFormatException;
+gb.esac.io.AsciiDataFileReader;
+gb.esac.io.AsciiDataFileWriter;
+gb.esac.timeseries.TimeSeries;
+gb.esac.timeseries.TimeSeriesMaker;
+gb.esac.timeseries.TimeSeriesOperations;
+gb.esac.tools.BasicStats;
+gb.esac.tools.MinMax;
+
+EXTERNAL
+
+(Packages):
 cern.colt
 hep.aida
 org.apache.log4j
 
-
-EXTERNAL (all classes)
+(All classes):
 cern.colt.list.DoubleArrayList;
 hep.aida.IAnalysisFactory;
 hep.aida.IAxis;
