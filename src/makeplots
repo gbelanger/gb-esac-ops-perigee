@@ -42,10 +42,9 @@ res=`ls residuals*qdp`
 echo "HARD residuals.ps/cps" >> $res
 qdp $res
 
-#  Make PDF plots
-for file in *.ps ; do epstopdf $file ; done
-
-#  Make PNG plots
-convert -density 200 exit.ps -flatten exit.png
-convert -density 200 entry.ps -flatten entry.png
-convert -density 200 residuals.ps -flatten residuals.png
+#  Make PDF an PNG plots
+for file in *.ps ; do
+    epstopdf $file
+    png=`echo $file | sed s/".ps"/".png"/g`    
+    convert -density 200 $file -flatten $png
+done
