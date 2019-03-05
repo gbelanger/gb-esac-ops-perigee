@@ -5,12 +5,18 @@ IDX_DIR=/Users/gbelanger/Documents/active/I/integral/idx/
 
 cd ../data/
 getrevno
-getrad
 cd $IDX_DIR
 ./orbut2orbit
 cd -
 cp $IDX_DIR/orbit.dat .
 cp $IDX_DIR/revno .
-egrep '^[0-9]' $IDX_DIR/radiation_belt_passage.txt | sort > rad.dat
+
+# Get rad file from ISDC
+#getrad
+#egrep '^[0-9]' $IDX_DIR/radiation_belt_passage.txt | sort -g > rad.dat
+
+# Get rad file from ggw6
+scp intportalowner@intggw6.n1grid.lan:/home/int/intportalowner/integral/radiation/radiation_600.txt .
+egrep '^[0-9]' radiation_600.txt | sort -g > rad.dat
 
 cd $SRC_DIR

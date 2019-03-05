@@ -1,7 +1,7 @@
 ! Filename: ../results/current/ts_entry_noNaNs_gaps_all.qdp
 ! Time series class: gb.esac.timeseries.TimeSeries
 ! Produced by: gb.esac.timeseries.QDPTimeSeriesFileWriter
-! Date: Thu Mar 01 12:02:57 CET 2018
+! Date: Thu Mar 01 12:04:08 CET 2018
 ! Author: G. Belanger - ESA/ESAC
 ! TStart: 238239.0
 ! Duration: 4.84263662E8 s

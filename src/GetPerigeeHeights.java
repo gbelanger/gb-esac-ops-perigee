@@ -133,17 +133,18 @@ public class GetPerigeeHeights {
 	// parameters: period, phase, amplitude, yOffset
 	double[] binHeights = ts.getBinHeights();
 	double meanHeight = ts.meanBinHeight();
-	double meanDev = Math.sqrt(ts.varianceInBinHeights());
-	double amplitude = meanDev; 
-	return new double[] {year, year/4., amplitude, meanHeight}; 
+	double thirdOfRange = (ts.maxBinHeight() - ts.minBinHeight())/3;
+	return new double[] {year, year/4., thirdOfRange, meanHeight}; 
     }
     
     private static double[][] getParBounds(TimeSeries ts) {
 	double quarter = year/4;
 	double third = year/3;
-	double[] periodBounds = new double[] {year-third, year+third};
+	double meanDev = Math.sqrt(ts.varianceInBinHeights());
+	double thirdOfRange = (ts.maxBinHeight() - ts.minBinHeight())/3;
+	double[] periodBounds = new double[] {year-quarter, year+quarter};
 	double[] phaseBounds = new double[] {0, year};
-	double[] amplBounds = new double[] {3, 10*Math.sqrt(ts.varianceInBinHeights())};
+	double[] amplBounds = new double[] {thirdOfRange-2*meanDev, thirdOfRange+2*meanDev};
 	double[] yOffsetBounds = new double[] {ts.minBinHeight(), ts.maxBinHeight()};
 	return new double[][]{periodBounds, phaseBounds, amplBounds, yOffsetBounds};
     }
