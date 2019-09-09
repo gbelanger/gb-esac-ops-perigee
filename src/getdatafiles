@@ -16,6 +16,7 @@ cp $IDX_DIR/revno .
 #egrep '^[0-9]' $IDX_DIR/radiation_belt_passage.txt | sort -g > rad.dat
 
 # Get rad file from ggw6
+echo "Copying radiation file from intggw6.n1grid.lan ..."
 scp intportalowner@intggw6.n1grid.lan:/home/int/intportalowner/integral/radiation/radiation_600.txt .
 egrep '^[0-9]' radiation_600.txt | sort -g > rad.dat
 

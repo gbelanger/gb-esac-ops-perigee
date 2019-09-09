@@ -16,7 +16,7 @@ fi
 cd -
 
 ##  Get data files needed
-#./getdatafiles
+./getdatafiles
 
 ##  Calculate the predictions
 javac *.java

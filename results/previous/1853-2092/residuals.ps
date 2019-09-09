@@ -1,0 +1,131 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%For: gbelanger
+%%Title: PGPLOT PostScript plot
+%%Creator: PGPLOT
+%%CreationDate:  5-Sep-2019 11:13
+%%BoundingBox: (atend)
+%%Orientation: Landscape
+%%Pages: (atend)
+%%EndComments
+%%BeginProlog
+/gs /gsave load def
+/gr /grestore  load def
+/L {moveto rlineto currentpoint stroke moveto} bind def
+/C {rlineto currentpoint stroke moveto} bind def
+/D {moveto 0 0 rlineto currentpoint stroke moveto} bind def
+/SLW {5 mul setlinewidth} bind def
+/SCF /pop load def
+/BP {newpath moveto} bind def
+/LP /rlineto load def
+/EP {rlineto closepath eofill} bind def
+/MB {gsave translate MFAC dup scale 1 setlinewidth 2 setlinecap 0 setlinejoin newpath} bind def
+/ME /grestore load def
+/CC {0 360 arc stroke} bind def
+/FC {0 360 arc fill} bind def
+% font stuff
+/pgscale 0.072 def
+% ISOLATIN encoding with built in linespacing definitions.
+% from tinydict by David Byram-Wigfield, http://www.capella.demon.co.uk
+% fontsize default setting.
+/FS	{ /fs exch def } def	 12 FS
+% linespacing ratio to fontsize: 1.3 is my default
+/LR {/lr exch def } def 1.3 LR
+/LG { /lg exch def } def   12 LG
+% calculate linespacing from chosen fontsize
+/F { exch dup lr mul LG dup FS exch findfont exch scalefont setfont } def
+/ISOFONT { findfont dup length dict begin { 1 index /FID ne {def} {pop pop}
+ifelse } forall /Encoding ISOLatin1Encoding def currentdict end /tmpfont
+exch definefont exch dup lr mul LG dup FS
+ scalefont setfont }  def
+/half { fs 2 div } bind def % half linespacing
+/quart { fs 4 div } bind def % quarter linespacing
+% vertical kerning: e.g. 5 v or -10 v
+/v { 0 exch rmoveto } def
+% horizontal kerning: e.g. 5 h or -10 h
+/h { 0 rmoveto } def
+% move up half the linespacing
+/up { half v } def
+% move down half the linespacing
+/dn { half neg v } def
+/TRL {/Times-Roman ISOFONT} bind def
+/TBL {/Times-Bold ISOFONT} bind def
+/TIL {/Times-Italic ISOFONT} bind def
+/TBIL {/Times-BoldItalic ISOFONT} bind def
+/HVL  {/Helvetica ISOFONT} bind def
+/HOL  {/Helvetica-Oblique ISOFONT} bind def
+/HNL  {/Helvetica-Narrow ISOFONT} bind def
+/HNBL  {/Helvetica-NarrowBold ISOFONT} bind def
+/HBL  {/Helvetica-Bold ISOFONT} bind def
+/ZL  {/Zapf-Chancery-MediumItalic ISOFONT} bind def
+/SL { /Symbol F } def
+/RS{findfont exch scalefont setfont moveto dup stringwidth neg exch neg exch rmoveto show} bind def
+/TR  { fs TRL   moveto rotate show currentpoint } def
+/TB  { fs TBL   moveto rotate show currentpoint } def
+/TI  { fs TIL   moveto rotate show currentpoint } def
+/TBI { fs TBIL  moveto rotate show currentpoint } def
+/HV  { fs HVL   moveto rotate show currentpoint } def
+/H0  { fs HOL   moveto rotate show currentpoint } def
+/HB  { fs HBL   moveto rotate show currentpoint } def
+/HN  { fs HNL   moveto rotate show currentpoint } def
+/HNB { fs HNBL  moveto rotate show currentpoint } def
+/Z   { fs ZL    moveto rotate show currentpoint } def
+/S   { fs SL    moveto rotate show currentpoint } def
+/TRC  { fs TRL   show currentpoint } def
+/TBC  { fs TBL   show currentpoint } def
+/TIC  { fs TIL   show currentpoint } def
+/TBIC { fs TBIL  show currentpoint } def
+/HVC  { fs HVL   show currentpoint } def
+/H0C  { fs HOL   show currentpoint } def
+/HNBC { fs HNBL  show currentpoint } def
+/HBC  { fs HBL   show currentpoint } def
+/HNC  { fs HNL   show currentpoint } def
+/ZC   { fs ZL    show currentpoint } def
+/SC   { fs SL    show currentpoint } def
+%%EndProlog
+
+%%Page: 1 1
+%%BeginPageSetup
+/PGPLOT save def
+pgscale pgscale scale
+8149 250 translate 90 rotate
+1 setlinejoin 1 setlinecap 1 SLW 1 SCF
+%%EndPageSetup
+%%PageBoundingBox: (atend)
+0.000 0.000 0.000 setrgbcolor 4 SLW 6299 0 2100 780 L 0 6239 C -6299 0 C 0 -6239 C 0 135 2561 780 L 0 67 3369 780 L 0 135 4178 780 L
+0 67 4987 780 L 0 135 5795 780 L 0 67 6604 780 L 0 135 7413 780 L 0 67 8221 780 L 0 135 2561 6884 L 0 67 3369 6952 L
+0 135 4178 6884 L 0 67 4987 6952 L 0 135 5795 6884 L 0 67 6604 6952 L 0 135 7413 6884 L 0 67 8221 6952 L
+ 23.40  pgscale div FS gs   0.00       2286.285        428.945 moveto rotate (-40) HVC gr
+ 23.40  pgscale div FS gs   0.00       3903.589        428.945 moveto rotate (-20) HVC gr
+ 23.40  pgscale div FS gs   0.00       5705.261        428.945 moveto rotate (0) HVC gr
+ 23.40  pgscale div FS gs   0.00       7232.487        428.945 moveto rotate (20) HVC gr
+135 0 2100 780 L 67 0 2100 1235 L 67 0 2100 1691 L 67 0 2100 2146 L 67 0 2100 2602 L 135 0 2100 3057 L 67 0 2100 3512 L
+67 0 2100 3968 L 67 0 2100 4423 L 67 0 2100 4879 L 135 0 2100 5334 L 67 0 2100 5789 L 67 0 2100 6245 L 67 0 2100 6700 L
+135 0 8264 780 L 67 0 8332 1235 L 67 0 8332 1691 L 67 0 8332 2146 L 67 0 8332 2602 L 135 0 8264 3057 L 67 0 8332 3512 L
+67 0 8332 3968 L 67 0 8332 4423 L 67 0 8332 4879 L 135 0 8264 5334 L 67 0 8332 5789 L 67 0 8332 6245 L 67 0 8332 6700 L
+ 23.40  pgscale div FS gs  90.00       1895.076        689.822 moveto rotate (0) HVC gr
+ 23.40  pgscale div FS gs  90.00       1895.076       2966.902 moveto rotate (5) HVC gr
+ 23.40  pgscale div FS gs  90.00       1895.076       5153.903 moveto rotate (10) HVC gr
+1.000 0.000 0.000 setrgbcolor 131 0 2101 1235 L 0 -455 C 131 0 C 131 0 C 131 0 C 0 455 C 131 0 C 132 0 C 0 -455 C 131 0 C 0 455 C
+131 0 C 0 -455 C 131 0 C 0 911 C 131 0 C 0 911 C 131 0 C 0 -456 C 131 0 C 0 1366 C 131 0 C 0 -1821 C 132 0 C 0 455 C 131 0 C 0 456 C
+131 0 C 0 455 C 131 0 C 0 -455 C 131 0 C 0 910 C 131 0 C 0 911 C 131 0 C 0 -1366 C 132 0 C 0 911 C 131 0 C 0 911 C 131 0 C 0 -1367 C
+131 0 C 131 0 C 0 -455 C 131 0 C 0 2732 C 131 0 C 0 456 C 132 0 C 131 0 C 0 455 C 131 0 C 0 -1821 C 131 0 C 0 910 C 131 0 C 0 911 C
+131 0 C 131 0 C 131 0 C 0 -2277 C 132 0 C 0 -455 C 131 0 C 0 -1822 C 131 0 C 131 0 C 0 -911 C 131 0 C 0 911 C 131 0 C 0 -455 C
+131 0 C 0 -456 C 132 0 C 131 0 C 0 456 C 131 0 C 0 -456 C 131 0 C 131 0 C 0 -455 C 131 0 C 0.000 1.000 0.000 setrgbcolor
+131 18 2166 826 L 132 25 C 131 32 C 131 42 C 131 54 C 131 68 C 131 84 C 131 103 C 132 124 C 131 146 C 131 170 C 131 194 C 131 217 C
+131 240 C 131 260 C 131 275 C 132 284 C 131 288 C 131 284 C 131 271 C 131 250 C 131 221 C 131 183 C 132 139 C 131 90 C 131 37 C
+131 -17 C 131 -71 C 131 -121 C 131 -168 C 132 -208 C 131 -240 C 131 -265 C 131 -280 C 131 -287 C 131 -287 C 131 -279 C 131 -265 C
+132 -248 C 131 -226 C 131 -203 C 131 -179 C 131 -154 C 131 -132 C 131 -110 C 132 -91 C 131 -74 C 0.000 0.000 0.000 setrgbcolor
+ 23.40  pgscale div FS gs  90.00       1312.375       2847.747 moveto rotate (Entries per bin) HVC gr
+ 23.40  pgscale div FS gs   0.00       3490.221         48.744 moveto rotate (Fractional Residuals \(%\)) HVC gr
+ 15.60  pgscale div FS gs   0.00       6633.055       6176.808 moveto rotate (Entries = 229) HVC gr
+ 15.60  pgscale div FS gs   0.00       6221.891       5942.838 moveto rotate (Mean = -2.04E00) HVC gr
+ 15.60  pgscale div FS gs   0.00       6393.235       5708.868 moveto rotate (RMS = 1.39E01) HVC gr
+PGPLOT restore showpage
+%%PageTrailer
+%%PageBoundingBox: 79 60 588 625
+
+%%Trailer
+%%BoundingBox: 79 60 588 625
+%%DocumentFonts: Helvetica
+%%Pages: 1
+%%EOF
